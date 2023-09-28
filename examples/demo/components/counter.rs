@@ -5,7 +5,7 @@
 use super::{get_block, Msg};
 
 use tuirealm::command::{Cmd, CmdResult};
-use tuirealm::event::Key;
+use tuirealm::event::{Key, KeyEventKind};
 use tuirealm::event::{KeyEvent, KeyModifiers};
 use tuirealm::props::{Alignment, Borders, Color, Style, TextModifiers};
 use tuirealm::tui::layout::Rect;
@@ -200,14 +200,17 @@ impl Component<Msg, NoUserEvent> for LetterCounter {
             Event::Keyboard(KeyEvent {
                 code: Key::Char(ch),
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press
             }) if ch.is_alphabetic() => Cmd::Submit,
             Event::Keyboard(KeyEvent {
                 code: Key::Tab,
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press
             }) => return Some(Msg::LetterCounterBlur), // Return focus lost
             Event::Keyboard(KeyEvent {
                 code: Key::Esc,
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press
             }) => return Some(Msg::AppClose),
             _ => Cmd::None,
         };
@@ -252,14 +255,17 @@ impl Component<Msg, NoUserEvent> for DigitCounter {
             Event::Keyboard(KeyEvent {
                 code: Key::Char(ch),
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press
             }) if ch.is_digit(10) => Cmd::Submit,
             Event::Keyboard(KeyEvent {
                 code: Key::Tab,
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press
             }) => return Some(Msg::DigitCounterBlur), // Return focus lost
             Event::Keyboard(KeyEvent {
                 code: Key::Esc,
                 modifiers: KeyModifiers::NONE,
+                kind: KeyEventKind::Press
             }) => return Some(Msg::AppClose),
             _ => Cmd::None,
         };

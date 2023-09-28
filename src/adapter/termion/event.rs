@@ -2,6 +2,8 @@
 //!
 //! event adapter for termion
 
+use crate::event::KeyEventKind;
+
 use super::{Event, Key, KeyEvent, KeyModifiers};
 
 use termion::event::{Event as TonEvent, Key as TonKey};
@@ -50,7 +52,7 @@ impl From<TonKey> for KeyEvent {
             TonKey::Esc => Key::Esc,
             TonKey::__IsNotComplete => Key::Null,
         };
-        Self { code, modifiers }
+        Self { code, modifiers, kind: KeyEventKind.Unknown }
     }
 }
 

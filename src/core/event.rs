@@ -78,6 +78,15 @@ pub enum NoUserEvent {}
 pub struct KeyEvent {
     pub code: Key,
     pub modifiers: KeyModifiers,
+    pub kind: KeyEventKind
+}
+
+#[derive(Debug, Eq, PartialEq, Copy, Clone, PartialOrd, Hash)]
+pub enum KeyEventKind {
+    Unknown,
+    Press,
+    Release,
+    Repeat
 }
 
 /// A keyboard event
@@ -159,7 +168,7 @@ bitflags! {
 
 impl KeyEvent {
     pub fn new(code: Key, modifiers: KeyModifiers) -> Self {
-        Self { code, modifiers }
+        Self { code, modifiers, kind: KeyEventKind::Unknown }
     }
 }
 

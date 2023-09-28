@@ -2,11 +2,14 @@
 //!
 //! event adapter for crossterm
 
+use crate::event::KeyEventKind;
+
 use super::{Event, Key, KeyEvent, KeyModifiers, MediaKeyCode};
 
 use crossterm::event::{
     Event as XtermEvent, KeyCode as XtermKeyCode, KeyEvent as XtermKeyEvent,
     KeyModifiers as XtermKeyModifiers, MediaKeyCode as XtermMediaKeyCode,
+    KeyEventKind as XtermKeyEventKind
 };
 
 impl<U> From<XtermEvent> for Event<U>
@@ -30,6 +33,17 @@ impl From<XtermKeyEvent> for KeyEvent {
         Self {
             code: e.code.into(),
             modifiers: e.modifiers.into(),
+            kind: e.kind.into()
+        }
+    }
+}
+
+impl From<XtermKeyEventKind> for KeyEventKind {
+    fn from(value: XtermKeyEventKind) -> Self {
+        match value {
+            XtermKeyEventKind::Press => KeyEventKind::Press,
+            XtermKeyEventKind::Repeat => KeyEventKind::Repeat,
+            XtermKeyEventKind::Release => KeyEventKind::Release,
         }
     }
 }
