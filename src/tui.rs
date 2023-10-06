@@ -4,5 +4,5 @@
 
 #[cfg(feature = "ratatui")]
 pub use ratatui::*;
-#[cfg(feature = "tui")]
+#[cfg(not(feature = "ratatui"))]
 pub use tui::*;
