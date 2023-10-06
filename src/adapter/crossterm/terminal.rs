@@ -32,7 +32,14 @@ impl TerminalBridge {
 
     #[cfg(target_family = "windows")]
     pub(crate) fn adapt_enter_alternate_screen(&mut self) -> TerminalResult<()> {
-        Ok(())
+        use crossterm::{terminal::EnterAlternateScreen, event::DisableMouseCapture};
+        use crossterm::execute;
+        execute!(
+            self.raw_mut().backend_mut(),
+            EnterAlternateScreen,
+            DisableMouseCapture
+        )
+        .map_err(|_| TerminalError::CannotEnterAlternateMode)
     }
 
     #[cfg(target_family = "unix")]
@@ -47,7 +54,14 @@ impl TerminalBridge {
 
     #[cfg(target_family = "windows")]
     pub(crate) fn adapt_leave_alternate_screen(&mut self) -> TerminalResult<()> {
-        Ok(())
+        use crossterm::{terminal::LeaveAlternateScreen, event::DisableMouseCapture};
+        use crossterm::execute;
+        execute!(
+            self.raw_mut().backend_mut(),
+            LeaveAlternateScreen,
+            DisableMouseCapture
+        )
+        .map_err(|_| TerminalError::CannotLeaveAlternateMode)
     }
 
     pub(crate) fn adapt_clear_screen(&mut self) -> TerminalResult<()> {
