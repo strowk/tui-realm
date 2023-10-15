@@ -82,6 +82,11 @@ pub struct KeyEvent {
 }
 
 #[derive(Debug, Eq, PartialEq, Copy, Clone, PartialOrd, Hash)]
+#[cfg_attr(
+    feature = "serialize",
+    derive(Deserialize, Serialize),
+    serde(tag = "type")
+)]
 pub enum KeyEventKind {
     Unknown,
     Press,
